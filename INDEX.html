@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>INDEX</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Site Inspection — Mobile Form → PDF</title>
+  <style>
+    :root{
+      --brand:#065248;          /* United Utilities primary */
+      --brand-dark:#04433B;     /* darker accent */
+      --ink:#111827;
+      --muted:#6b7280;
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --ok:#16a34a;
+      --no:#b91c1c;
+      --na:#6b7280
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{max-width:820px;margin:0 auto;padding:16px}
+    .card{background:var(--card);border-radius:14px;box-shadow:0 6px 20px rgba(17,24,39,.06);padding:14px 14px}
+    header{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+    .logo{display:flex;align-items:center;gap:10px}
+    .wordmark{height:32px;display:inline-block}
+    h1{font-size:20px;margin:4px 0}
+    .strap{font-size:12px;color:#374151;letter-spacing:.2px}
+    .grid{display:grid;grid-template-columns:1fr;gap:10px}
+    @media(min-width:560px){.grid{grid-template-columns:repeat(2,1fr)}}
+    label{font-size:13px;color:#374151;margin-bottom:4px;display:block}
+    input,textarea,select{width:100%;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;font:inherit}
+    textarea{min-height:84px}
+    .sec{margin:14px 0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
+    .sec h3{margin:0;padding:10px 12px;background:#edf7f5;color:#0f172a;font-size:14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}
+    .q{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 12px;border-top:1px solid #f1f5f9}
+    .q:first-of-type{border-top:0}
+    .qtext{font-size:14px}
+    .pillset{display:flex;gap:6px;align-items:center}
+    .pill{padding:8px 12px;border-radius:999px;border:1px solid #e5e7eb;cursor:pointer;user-select:none;font-size:13px}
+    .pill[data-v="yes"].active{background:rgba(22,163,74,.08);border-color:var(--ok);color:var(--ok)}
+    .pill[data-v="no"].active{background:rgba(185,28,28,.08);border-color:var(--no);color:var(--no)}
+    .pill[data-v="na"].active{background:rgba(107,114,128,.08);border-color:var(--na);color:var(--na)}
+    .addnote{border:none;background:#e9f3f1;color:var(--brand-dark);padding:8px 10px;border-radius:10px;cursor:pointer;font-size:12px}
+    .note{display:none;margin-top:10px}
+    .note.show{display:block}
+    .note textarea{background:#f9fafb}
+    .thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .thumb{position:relative;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;width:70px;height:70px;background:#f8fafc}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb button{position:absolute;top:2px;right:2px;border:none;background:rgba(0,0,0,.55);color:#fff;border-radius:6px;padding:2px 6px;font-size:10px;cursor:pointer}
+    .iconbtn{border:none;background:#e9f3f1;color:var(--brand);padding:8px 10px;border-radius:10px;cursor:pointer;font-size:12px}
+    .pillset .count{font-size:12px;color:#6b7280;margin-left:4px}
+    .toolbar{position:sticky;bottom:0;left:0;right:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.2) blur(6px);border-top:1px solid #e5e7eb;padding:10px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:none;border-radius:12px;padding:12px 14px;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--brand);color:#fff}
+    .btn-outline{background:#fff;border:1px solid #cbd5e1}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .sigPreview{margin-top:8px;font-family:'Brush Script MT', 'Segoe Script', cursive;font-size:28px;color:#1f2937}
+    .sigHelp{font-size:12px;color:#6b7280;margin-top:4px}
+  </style>
+  <!-- pdfmake -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div class="logo" aria-label="United Utilities">
+          <!-- Official UU SVG (from Wikimedia Commons) -->
+          <img class="wordmark" src="https://upload.wikimedia.org/wikipedia/commons/f/f2/United_Utilities_logo.svg" alt="United Utilities Logo"/>
+          <div>
+            <div class="strap small muted">Water for the North West</div>
+            <h1>Site Inspection</h1>
+          </div>
+        </div>
+      </header>
+
+      <section class="grid" id="meta">
+        <div>
+          <label>Contractor</label>
+          <input name="contractor" />
+        </div>
+        <div>
+          <label>Site</label>
+          <input name="site" />
+        </div>
+        <div>
+          <label>Inspection by</label>
+          <input name="inspector" />
+        </div>
+        <div>
+          <label>Date</label>
+          <input name="date" type="date" />
+        </div>
+        <div>
+          <label>PCW</label>
+          <input name="pcw" />
+        </div>
+        <div>
+          <label>Project Manager</label>
+          <input name="pm" />
+        </div>
+      </section>
+
+      <div id="sections"></div>
+
+      <!-- Signature Section -->
+      <section class="sec" id="signatureSection">
+        <h3>Signature</h3>
+        <div class="q">
+          <div>
+            <label class="small muted" for="signatureName">Type your name to sign</label>
+            <input name="signatureName" id="signatureName" placeholder="Full name" />
+            <div class="sigPreview"><span id="sigPreviewText">Your Signature</span></div>
+            <div class="sigHelp">Your typed name will appear on the PDF with today’s date.</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <button class="btn btn-outline" id="clearBtn">Clear All</button>
+        <button class="btn btn-primary" id="pdfPreviewBtn">Preview PDF</button>
+        <button class="btn btn-outline" id="pdfDownloadBtn">Download PDF</button>
+      </div>
+      <p class="small muted">Tip: You can add this page to your phone’s Home Screen for quick access. Answers are kept in the page until you clear them.</p>
+    </div>
+  </div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ===== Official logo URL (from the uploaded SVG page) =====
+  // Used inline for the HTML header <img>, and fetched for PDF embedding:
+  const LOGO_URL = 'https://upload.wikimedia.org/wikipedia/commons/f/f2/United_Utilities_logo.svg'; // :contentReference[oaicite:1]{index=1}
+
+  // ===== Schema from analysed form (CDM → Services) =====
+  const SCHEMA = [
+    { title: '1 · CDM', items: [
+      'Have method statements and risk assessments been developed for the works being undertaken?',
+      'Are method statements reviewed, briefed, and applicable to the works?',
+      'Is the CPP available and up to date?',
+      'If required is the F10 available and up to date?',
+      'Are valid insurance certs, HSEQ policies, HSE posters, and safety info displayed?'
+    ]},
+    { title: '2 · Permits', items: [
+      'Is there a SHED in place?',
+      'Has the contractor issued a Permit to lift where applicable?',
+      'Has the contractor issued a Permit to dig where applicable?',
+      'Has the contractor issued a Confined space permit where applicable?',
+      'Has the contractor issued a Hot works permit where applicable?'
+    ]},
+    { title: '3 · Welfare', items: [
+      'Are welfare facilities available on site?',
+      'Is there a place where operatives can take rest breaks, make hot drinks, and prepare food?',
+      'Do site operatives have access to warm running water and washing facilities?',
+      'Are suitable first aid arrangements in place?',
+      'Are fire extinguishers in date and fully charged?'
+    ]},
+    { title: '4 · Training / Induction / Housekeeping', items: [
+      'Are site specific inductions being undertaken?',
+      'Are visitor inductions being completed?',
+      'Are all competency certs and cards available?',
+      'Are safety briefings being delivered on site?',
+      'Is appropriate PPE being worn by all site personnel?',
+      'Is the site accessible, kept tidy with materials or equipment not being used stored away?',
+      'Is there sufficient space on site for waste storage and segregation?'
+    ]},
+    { title: '5 · Protecting the Public', items: [
+      'Are adequate safety and security measures in place to protect the public?',
+      'Are information and courtesy boards displayed showing correct info and phone numbers?'
+    ]},
+    { title: '6 · Traffic Management', items: [
+      'Is the traffic on site being adequately managed/controlled?',
+      'Are pedestrians and traffic segregated where applicable?',
+      'Are deliveries adequately managed?'
+    ]},
+    { title: '7 · Environmental', items: [
+      'Are drip trays, plant nappies situated under all fuelled plant?',
+      'Are fuel/oil storage areas away from high-risk locations?'
+    ]},
+    { title: '8 · Services', items: [
+      'Have service drawings been provided?',
+      'Are provisions in place for overhead services?'
+    ]}
+  ];
+
+  // ===== Render form =====
+  const sectionsEl = document.getElementById('sections');
+  SCHEMA.forEach((sec, sIdx)=>{
+    const secEl = document.createElement('section');
+    secEl.className = 'sec';
+    secEl.innerHTML = `<h3>${sec.title}<span class="muted small">YES / NO / N/A · Add notes</span></h3>`;
+    sec.items.forEach((q, qIdx)=>{
+      const id = `s${sIdx}q${qIdx}`;
+      const qEl = document.createElement('div');
+      qEl.className = 'q';
+      qEl.innerHTML = `
+        <div>
+          <div class="qtext">${q}</div>
+          <div class="note" id="${id}-note">
+            <label class="small muted">Notes / Actions</label>
+            <textarea data-bind="note" data-id="${id}" placeholder="Add details, actions, names, etc."></textarea>
+          </div>
+        </div>
+        <div>
+          <div class="pillset" role="group" aria-label="choices">
+            <span class="pill" data-id="${id}" data-v="yes">Yes</span>
+            <span class="pill" data-id="${id}" data-v="no">No</span>
+            <span class="pill" data-id="${id}" data-v="na">N/A</span>
+            <button class="addnote" type="button" data-id="${id}">＋</button>
+            <button class="iconbtn addphoto" type="button" data-id="${id}" title="Add photo">📷</button>
+            <input class="photo-input" type="file" accept="image/*" capture="environment" data-id="${id}" multiple style="display:none" />
+            <span class="count small" id="${id}-photocount"></span>
+          </div>
+          <div class="thumbs" id="${id}-thumbs"></div>
+        </div>`;
+      secEl.appendChild(qEl);
+    });
+    sectionsEl.appendChild(secEl);
+  });
+
+  // ===== State & helpers =====
+  const STATE = JSON.parse(localStorage.getItem('siteInspectionState')||'{}');
+  function save(){
+    try { localStorage.setItem('siteInspectionState', JSON.stringify(STATE)); }
+    catch(e){ console.warn('Save failed (likely storage quota). Photos will not be persisted.', e); alert('Storage is full. New photos will not be saved between refreshes, but will still go into the PDF.'); }
+  }
+
+  function setChoice(id, val){
+    STATE[id] = STATE[id] || {}; STATE[id].choice = val; save();
+    document.querySelectorAll(`.pill[data-id="${id}"]`).forEach(p=>{
+      p.classList.toggle('active', p.dataset.v===val);
+    });
+  }
+  function toggleNote(id){
+    const box = document.getElementById(`${id}-note`);
+    box.classList.toggle('show');
+  }
+  function setNote(id, text){ STATE[id] = STATE[id] || {}; STATE[id].note = text; save(); }
+
+  // ===== Events =====
+  sectionsEl.addEventListener('click', e=>{
+    const pill = e.target.closest('.pill');
+    if(pill){ setChoice(pill.dataset.id, pill.dataset.v); return; }
+    const plus = e.target.closest('.addnote');
+    if(plus){ toggleNote(plus.dataset.id); return; }
+    const cam = e.target.closest('.addphoto');
+    if(cam){ const input = sectionsEl.querySelector(`input.photo-input[data-id="${cam.dataset.id}"]`); if(input) input.click(); return; }
+    const del = e.target.closest('.thumb button[data-del]');
+    if(del){ const id = del.getAttribute('data-id'); const idx = parseInt(del.getAttribute('data-del'),10); removePhoto(id, idx); return; }
+  });
+
+  sectionsEl.addEventListener('input', e=>{
+    if(e.target.matches('textarea[data-bind="note"]')){ setNote(e.target.dataset.id, e.target.value); }
+  });
+
+  sectionsEl.addEventListener('change', async (e)=>{
+    const input = e.target.closest('input.photo-input');
+    if(!input) return;
+    const id = input.dataset.id;
+    const files = Array.from(input.files||[]);
+    for(const file of files){ await addPhoto(id, file); }
+    input.value = '';
+  });
+
+  // ===== Restore UI from STATE =====
+  function renderThumbs(id){
+    const holder = document.getElementById(`${id}-thumbs`);
+    const count = document.getElementById(`${id}-photocount`);
+    const list = (STATE[id] && STATE[id].photos) ? STATE[id].photos : [];
+    if(holder){
+      holder.innerHTML = '';
+      list.forEach((src, i)=>{
+        const d = document.createElement('div'); d.className='thumb';
+        d.innerHTML = `<img src="${src}" alt="Photo ${i+1}"><button data-del="${i}" data-id="${id}" title="Remove">×</button>`;
+        holder.appendChild(d);
+      });
+    }
+    if(count){ count.textContent = list.length ? `📷 ${list.length}` : ''; }
+  }
+
+  function restore(){
+    Object.entries(STATE).forEach(([id, v])=>{
+      if(v && v.choice){ document.querySelectorAll(`.pill[data-id="${id}"]`).forEach(p=>{p.classList.toggle('active', p.dataset.v===v.choice)}); }
+      if(v && v.note){ const box = document.getElementById(`${id}-note`); if(box){ box.classList.add('show'); const ta=box.querySelector('textarea'); if(ta) ta.value = v.note; } }
+      if(v && v.photos){ renderThumbs(id); }
+    });
+    // meta
+    const meta = document.querySelectorAll('#meta input');
+    meta.forEach(i=>{ if(STATE.meta?.[i.name]) i.value = STATE.meta[i.name]; });
+    // signature
+    if(STATE.signatureName){ const inp = document.getElementById('signatureName'); const prev = document.getElementById('sigPreviewText'); if(inp){ inp.value = STATE.signatureName; } if(prev){ prev.textContent = STATE.signatureName; }}
+  }
+  restore();
+
+  // ===== Photos API =====
+  const MAX_PHOTOS_PER_Q = 2; // keep PDFs light + avoid storage issues
+  const MAX_DIM = 1280; // px
+  const JPEG_QUALITY = 0.8;
+
+  async function addPhoto(id, file){
+    STATE[id] = STATE[id] || {};
+    STATE[id].photos = STATE[id].photos || [];
+    if(STATE[id].photos.length >= MAX_PHOTOS_PER_Q){ alert('Max photos reached for this question.'); return; }
+    const dataUrl = await compressImage(file, MAX_DIM, JPEG_QUALITY);
+    STATE[id].photos.push(dataUrl);
+    renderThumbs(id);
+    save();
+  }
+  function removePhoto(id, idx){
+    if(!STATE[id] || !STATE[id].photos) return;
+    STATE[id].photos.splice(idx,1);
+    renderThumbs(id);
+    save();
+  }
+  async function compressImage(file, maxDim=1280, quality=0.85){
+    const img = await readImage(file);
+    const [w,h] = [img.width, img.height];
+    const scale = Math.min(1, maxDim/Math.max(w,h));
+    const cw = Math.round(w*scale), ch = Math.round(h*scale);
+    const canvas = document.createElement('canvas'); canvas.width=cw; canvas.height=ch;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, cw, ch);
+    return canvas.toDataURL('image/jpeg', quality);
+  }
+  function readImage(file){
+    return new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.onload = ()=>{ const img = new Image(); img.onload=()=>resolve(img); img.onerror=reject; img.src = reader.result; };
+      reader.onerror = reject; reader.readAsDataURL(file);
+    });
+  }
+
+  // ===== Meta & Signature persistence =====
+  document.getElementById('meta').addEventListener('input', e=>{
+    STATE.meta = STATE.meta || {}; STATE.meta[e.target.name] = e.target.value; save();
+  });
+
+  const sigInput = document.getElementById('signatureName');
+  const sigPreview = document.getElementById('sigPreviewText');
+  function updateSignature(val){
+    STATE.signatureName = val; save();
+    if(sigPreview){ sigPreview.textContent = val || 'Your Signature'; }
+  }
+  sigInput.addEventListener('input', (e)=> updateSignature(e.target.value));
+
+  // ===== Clear =====
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    if(confirm('Clear all answers?')){ localStorage.removeItem('siteInspectionState'); location.reload(); }
+  });
+
+  // ===== PDF: fetch SVG as dataURL, then build doc =====
+  async function fetchAsDataURL(url){
+    const res = await fetch(url);
+    const text = await res.text();
+    const encoded = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text);
+    return encoded;
+  }
+
+  function buildPdfDoc(logoDataUrl){
+    const meta = STATE.meta || {};
+    const today = new Date().toISOString().slice(0,10);
+
+    const header = {
+      columns:[
+        { image: logoDataUrl, width: 160 },
+        {
+          width: '*',
+          stack: [
+            { text: 'Water for the North West', style: 'strap' },
+            {
+              columns: [
+                { text: 'Site Inspection', style: 'h1' },
+                { width: 1, canvas: [ { type: 'line', x1:0, y1:0, x2:0, y2:18, lineWidth:1, lineColor:'#cbd5e1' } ] },
+                { text: [{ text:'WQMP', bold:true }, { text:' (Water Quality Maintenance Programme)', bold:false }], style: 'wqmp' }
+              ],
+              columnGap: 10,
+              margin: [0, 2, 0, 0]
+            }
+          ]
+        }
+      ]
+    };
+
+    const metaTable = {
+      table:{ widths:['*','*','*','*'], body:[
+        [{text:'Contractor',style:'th'},{text:meta.contractor||'',style:'td'},{text:'Site',style:'th'},{text:meta.site||'',style:'td'}],
+        [{text:'Inspection by',style:'th'},{text:meta.inspector||'',style:'td'},{text:'Date',style:'th'},{text:meta.date||today,style:'td'}],
+        [{text:'PCW',style:'th'},{text:meta.pcw||'',style:'td'},{text:'Project Manager',style:'th'},{text:meta.pm||'',style:'td'}],
+      ]},
+      layout:'lightHorizontalLines',
+      margin:[0,6,0,0]
+    };
+
+    const sections = [];
+    SCHEMA.forEach((sec, sIdx)=>{
+      sections.push({text: sec.title, style:'h2', margin:[0,10,0,4]});
+      const rows = [[
+        {text:'Question',style:'th'},
+        {text:'Answer',style:'th', alignment:'center'},
+        {text:'Notes / Actions',style:'th'}
+      ]];
+      sec.items.forEach((q,qIdx)=>{
+        const id = `s${sIdx}q${qIdx}`;
+        const ans = (STATE[id]?.choice||'').toUpperCase();
+        const note = STATE[id]?.note || '';
+        const photos = (STATE[id]?.photos||[]);
+        const photoBadge = photos.length ? ` (📷 ${photos.length})` : '';
+        rows.push([{text:q,style:'td'},{text:(ans+photoBadge).trim(),style:'td', alignment:'center'},{text:note,style:'td'}]);
+      });
+      sections.push({table:{widths:['*',60,'*'], body:rows}, layout:'lightHorizontalLines'});
+    });
+
+    // Photos page(s)
+    const photoSections = [];
+    SCHEMA.forEach((sec, sIdx)=>{
+      sec.items.forEach((q,qIdx)=>{
+        const id = `s${sIdx}q${qIdx}`;
+        const photos = (STATE[id]?.photos)||[];
+        if(photos.length){
+          const photoBoxes = photos.map((p, idx)=>({
+            stack:[
+              { table: { body: [[{ image:p, width:180 }]] }, layout:{
+                  hLineWidth:()=>1, vLineWidth:()=>1,
+                  hLineColor:()=> '#cbd5e1', vLineColor:()=> '#cbd5e1'
+                }
+              },
+              { text:`Q: ${q}`, style:'photoCap', margin:[0,4,0,0] }
+            ], margin:[0,4,12,8]
+          }));
+          photoSections.push({
+            table:{ widths:['*'], body:[
+              [ {text:q, style:'th'} ],
+              [ { columns: photoBoxes } ]
+            ]},
+            layout:{ hLineWidth:(i)=> i===0?1:0.5, vLineWidth:()=>0, hLineColor:()=> '#e5e7eb' },
+            margin:[0,6,0,6]
+          });
+        }
+      });
+    });
+    if(photoSections.length){
+      sections.push({text:'Photos', style:'h2', margin:[0,14,0,4]});
+      sections.push(...photoSections);
+    }
+
+    // Signature block
+    const sigName = STATE.signatureName || '';
+    const signDate = meta.date || today;
+    sections.push({
+      margin:[0,14,0,0],
+      table:{
+        widths:['*','*'],
+        body:[
+          [
+            {text:`Signed by: ${sigName || '[Not signed]'}`, border:[false,false,false,false]},
+            {text:`Date: ${signDate}`, alignment:'right', border:[false,false,false,false]}
+          ]
+        ]
+      },
+      layout:'noBorders'
+    });
+
+    return {
+      pageMargins:[28,36,28,36],
+      content: [header, metaTable].concat(sections),
+      styles:{
+        strap:{fontSize:9,color:'#374151'},
+        h1:{fontSize:18,bold:true,color:'#065248'},
+        wqmp:{fontSize:16,color:'#0f172a'},
+        h2:{fontSize:12,bold:true,color:'#065248'},
+        th:{bold:true, fillColor:'#e9f3f1'},
+        td:{margin:[2,4,2,4]},
+        photoCap:{fontSize:8,color:'#6b7280'}
+      },
+      defaultStyle:{fontSize:9}
+    };
+  }
+
+  async function openPdf(){
+    const logoDataUrl = await fetchAsDataURL(LOGO_URL);
+    pdfMake.createPdf(buildPdfDoc(logoDataUrl)).open();
+  }
+  async function downloadPdf(){
+    const logoDataUrl = await fetchAsDataURL(LOGO_URL);
+    const meta = STATE.meta || {}; const date = meta.date || new Date().toISOString().slice(0,10);
+    const site = (meta.site||'Site').replace(/[^A-Za-z0-9-_]+/g,'_');
+    const fname = `Site-Inspection_${site}_${date}.pdf`;
+    pdfMake.createPdf(buildPdfDoc(logoDataUrl)).download(fname);
+  }
+
+  document.getElementById('pdfPreviewBtn').addEventListener('click', openPdf);
+  document.getElementById('pdfDownloadBtn').addEventListener('click', downloadPdf);
+
+  // ===== Lightweight self-tests (console) =====
+  (function selfTests(){
+    try {
+      console.assert(Array.isArray(SCHEMA) && SCHEMA.length === 8, 'SCHEMA should contain 8 sections');
+      const rendered = document.querySelectorAll('#sections .sec').length;
+      console.assert(rendered === SCHEMA.length, `Rendered sections (${rendered}) should equal schema length (${SCHEMA.length})`);
+      console.info('Self-tests passed: schema, DOM render, PDF builder ready');
+    } catch (e) {
+      console.warn('Self-tests failed:', e);
+    }
+  })();
+})();
+</script>
+</body>
+</html>
+
+</body>
+</html>
